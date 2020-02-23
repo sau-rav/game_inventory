@@ -1,0 +1,15 @@
+{% extends "root.html" %}
+{% block content %}
+    {% for game in game_list %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ game[4] }}</a>
+              <small class="text-muted">{{ game[2] }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ game[1] }}</a></h2>
+            <p class="article-content">{{ game[9] }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
