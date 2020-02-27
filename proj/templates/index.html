@@ -1,0 +1,35 @@
+{% extends "home_template.html" %}
+{% block content %}
+    {% if filter %}
+      <div class="alert alert-primary" role="alert">
+        Search results for {{ filter }}
+      </div>
+    {% endif %}
+    {% for game in game_list %}
+      <article class="media content-section">
+          <div class="media-left">
+            <img src="{{ game[8] }}" class="media-object" style="width: 200px; height: 130px;">
+          </div>
+          <div class="media-body">
+            <a href="{{ url_for('game_page', id=game[0]) }}"><h2 class="font-weight-normal ml-3 ">{{ game[1] }}</h2></a>
+            <h6 class="font-weight-light ml-3">{{ game[2] }}</h6>
+            <hr class="ml-3 mr-3">
+            <div class="ml-3">
+              {% for category in game[9] %}
+                <a class="btn btn-light btn-sm" href="{{ url_for('index', query=category) }}">{{ category }}</a>
+              {% endfor %}
+            </div>
+          </div>
+      </article>
+    {% endfor %}
+    {% for page_num in range(disp_list|length) %}
+      {% if page_num > 0 and disp_list[page_num] != disp_list[page_num-1]+1 %}
+        <a>....</a>
+      {% endif %}
+      {% if disp_list[page_num] == page %}
+        <a class="btn btn-info mb-4" href="{{ url_for('index', page = disp_list[page_num]) }}">{{ disp_list[page_num] }}</a>    
+      {% else %}
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('index', page = disp_list[page_num]) }}">{{ disp_list[page_num] }}</a>
+      {% endif %}
+    {% endfor %}
+{% endblock content %}
