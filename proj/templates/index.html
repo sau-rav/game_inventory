@@ -1,4 +1,11 @@
-{% extends "home_template.html" %}
+{% if name %}
+  {% extends "user_template.html" %}
+  {% block username %}
+    {{ name }}
+  {% endblock username %}
+{% else %}
+  {% extends "home_template.html" %}
+{% endif %}
 {% block content %}
     {% if filter %}
       <div class="alert alert-primary" role="alert">
@@ -16,7 +23,7 @@
             <hr class="ml-3 mr-3">
             <div class="ml-3">
               {% for category in game[9] %}
-                <a class="btn btn-light btn-sm" href="{{ url_for('index', query=category) }}">{{ category }}</a>
+                <a class="btn btn-light btn-sm" href="{{ url_for('index', query=category, query_type=1) }}">{{ category }}</a>
               {% endfor %}
             </div>
           </div>
@@ -27,9 +34,17 @@
         <a>....</a>
       {% endif %}
       {% if disp_list[page_num] == page %}
-        <a class="btn btn-info mb-4" href="{{ url_for('index', page = disp_list[page_num]) }}">{{ disp_list[page_num] }}</a>    
+        {% if filter %}
+          <a class="btn btn-info mb-4" href="{{ url_for('index', page = disp_list[page_num], query=filter, query_type=query_type) }}">{{ disp_list[page_num] }}</a>    
+        {% else %}
+          <a class="btn btn-info mb-4" href="{{ url_for('index', page = disp_list[page_num]) }}">{{ disp_list[page_num] }}</a>
+        {% endif %}
       {% else %}
-        <a class="btn btn-outline-info mb-4" href="{{ url_for('index', page = disp_list[page_num]) }}">{{ disp_list[page_num] }}</a>
+        {% if filter %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('index', page = disp_list[page_num], query=filter, query_type=query_type) }}">{{ disp_list[page_num] }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('index', page = disp_list[page_num]) }}">{{ disp_list[page_num] }}</a>
+        {% endif %}
       {% endif %}
     {% endfor %}
 {% endblock content %}

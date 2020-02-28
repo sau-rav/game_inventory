@@ -4,9 +4,11 @@ def disp_list_generator(page, list_size):
     disp_dict = {}
     disp_list = []
     for i in range(1, 4):
-        disp_dict[i] = 1
+        if i >= 1 and i <= list_size:
+            disp_dict[i] = 1
     for i in range(list_size-2, list_size+1):
-        disp_dict[i] = 1
+        if i >= 1 and i <= list_size:
+            disp_dict[i] = 1
     for i in range(page-1, page+3):
         if i >= 1 and i <= list_size:
             disp_dict[i] = 1

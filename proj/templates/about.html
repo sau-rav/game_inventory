@@ -1,0 +1,11 @@
+{% if name %}
+  {% extends "user_template.html" %}
+  {% block username %}
+    {{ name }}
+  {% endblock username %}
+{% else %}
+  {% extends "home_template.html" %}
+{% endif %}
+{% block content %}
+    <h3>This is about page</h3>
+{% endblock content %}

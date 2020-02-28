@@ -16,7 +16,7 @@
         <title>Steam Stats</title>
     {% endif %}
 </head>
-<body>
+<body {% block bg %} {% endblock %}>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <div class="container">
@@ -27,10 +27,11 @@
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{{ url_for('index') }}">Home</a>
-              <a class="nav-item nav-link" href="{{ url_for('index') }}">About</a>
+              <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
             </div>
-            <form class="form-inline">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="form-inline" action="{{ url_for('index') }}">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
+              <input type="hidden" name="query_type" value="3">
               <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
             </form>
             <!-- Navbar Right Side -->
@@ -52,13 +53,16 @@
             <h3>Quick Links</h3>
             <p class='text-muted'>
               <ul class="list-group">
-                <a href="#"><li class="list-group-item">Top Rated</li></a>
-                <a href="#"><li class="list-group-item">Latest</li></a>
-                <a href="#"><li class="list-group-item">Highest Selling</li></a>
-                <a href="#"><li class="list-group-item">Multiplayer</li></a>
-                <a href="#"><li class="list-group-item">Mini Games</li></a>
+                <a href="{{ url_for('index', query='rating', query_type=3) }}"><li class="list-group-item">Top Rated</li></a>
+                <a href="{{ url_for('index', query='date', query_type=3) }}"><li class="list-group-item">Latest</li></a>
+                <a href="{{ url_for('index', query='sell', query_type=3) }}"><li class="list-group-item">Highest Selling</li></a>
+                <a href="{{ url_for('index', query='playtime', query_type=3) }}"><li class="list-group-item">Playtime(Low to High)</li></a>
+                <a href="{{ url_for('index', query='price', query_type=3) }}"><li class="list-group-item">Price(Low to High)</li></a>
               </ul>
             </p>
+          </div>
+          <div class="content-section">
+            {% block side_content %}{% endblock %}
           </div>
         </div>
       </div>

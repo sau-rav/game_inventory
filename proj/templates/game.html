@@ -1,7 +1,17 @@
-{% extends "home_template.html" %}
+{% if name %}
+  {% extends "user_template.html" %}
+  {% block username %}
+    {{ name }}
+  {% endblock username %}
+{% else %}
+  {% extends "home_template.html" %}
+{% endif %}
+{% block bg %}
+    style="background-image: url('{{ game_data[25] }}');
+{% endblock bg %}
 {% block content %}
-    <div class="container">
-        <h2 class="font-weight-normal">Counter Strike</h2>
+    <div class="container" style="background-color: rgb(240, 240, 240); border-radius: 2px;">
+        <h2 class="font-weight-normal">{{ game_data[1] }}</h2>
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -12,19 +22,27 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block w-100" src="https://steamcdn-a.akamaihd.net/steam/apps/10/0000000132.1920x1080.jpg?t=1528733245" alt="First slide">
+                    <img class="d-block w-100" src="{{ game_data[24][0] }}" alt="First slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="https://steamcdn-a.akamaihd.net/steam/apps/10/0000000133.1920x1080.jpg?t=1528733245" alt="Second slide">
+                    <img class="d-block w-100" src="{{ game_data[24][1] }}" alt="Second slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="https://steamcdn-a.akamaihd.net/steam/apps/10/0000000134.1920x1080.jpg?t=1528733245" alt="Third slide">
+                    <img class="d-block w-100" src="{{ game_data[24][2] }}" alt="Third slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="https://steamcdn-a.akamaihd.net/steam/apps/10/0000000135.1920x1080.jpg?t=1528733245" alt="Fourth slide">
+                    {% if game_data[24][3] %}
+                        <img class="d-block w-100" src="{{ game_data[24][3] }}" alt="Fourth slide">
+                    {% else %}
+                        <img class="d-block w-100" src="{{ game_data[24][1] }}" alt="Fourth slide">
+                    {% endif %}
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="https://steamcdn-a.akamaihd.net/steam/apps/10/0000000136.1920x1080.jpg?t=1528733245" alt="Fifth slide">
+                    {% if game_data[24][4] %}
+                        <img class="d-block w-100" src="{{ game_data[24][4] }}" alt="Fifth slide">
+                    {% else %}
+                        <img class="d-block w-100" src="{{ game_data[24][2] }}" alt="Fifth slide">
+                    {% endif %}
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -36,5 +54,48 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
+        <hr>
+        <h4 class="font-weight-normal">Developer : {{ game_data[4] }}</h4>
+        <hr>
+        <h4 class="font-weight-normal">Description</h4>
+        <p>{{ game_data[19] }}</p>
+        <hr>
+    </div>
+    <!-- for requirements -->
+    <div class="container" style="background-color: rgb(240, 240, 240); border-radius: 2px;">
+        <hr>
+        <h4 class="font-weight-normal">Requirements</h4>
+        <p>{{ game_data[30] }}</p>
+        <hr>
+        <h4 class="font-weight-normal">Platforms</h4>
+        <p>{{ game_data[6] }}</p>
+        <hr>
+        <h4 class="font-weight-normal">Misc. Data</h4>
+        <p><strong>Average Playtime : </strong> {{ game_data[14]/600 }} minutes</p>
+        <p><strong>Categories : </strong> {{ game_data[8] }}</p>
+        <p><strong>Tags : </strong>{{ game_data[10] }}</p>
+        <p><strong>Required Age : </strong>{{ game_data[7] }}</p>
+        <p><strong>Owners : </strong> {{ game_data[16] }}</p>
+        <p><strong>Price : </strong> {{ game_data[17] }}</p>
+        <hr>
+    </div>
+    <!-- for ratings -->
+    <div class="container" style="background-color: rgb(240, 240, 240); border-radius: 2px;">
+        <h3 class="font-weight-normal">Ratings</h3>
+    </div>
+    <!-- for similar games -->
+    <div class="container" style="background-color: rgb(240, 240, 240); border-radius: 2px;">
+        <h3 class="font-weight-normal">Similar Games</h3>
     </div>
 {% endblock content %}
+{% block side_content %}
+    <div>
+        <img src="{{ game_data[23] }}" alt="Game Cover" style="height: 215px; width: 307.5px;">
+        <hr>
+        <p>{{ game_data[21] }}</p>
+        <hr>
+        <p><strong>Release Date : </strong> {{ game_data[2] }}</p>
+        <p><strong>Publisher : </strong> {{ game_data[5] }}</p>
+        <p><strong>Developer : </strong> {{ game_data[4] }}</p>
+    </div>
+{% endblock side_content %}
