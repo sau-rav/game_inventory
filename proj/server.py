@@ -106,7 +106,22 @@ def signup():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html', name=current_user.id)
+	per_page = 10
+	page = request.args.get('page', 1, type=int)
+	game_data = db.user_owned_games(current_user.id)
+	print(game_data)
+	game_list = game_data[0][10*(page-1):(10*(page-1)+per_page)]
+	list_size = math.ceil(game_data[1]/per_page)
+	disp_list = functions.disp_list_generator(page, list_size)
+	if page != list_size:
+	    for i in range(per_page):
+	        cat_list = functions.extract_data(game_list[i][4], ';')
+	        game_list[i] += (cat_list,)
+	else:
+	    for i in range(game_data[1]%per_page):
+	        cat_list = functions.extract_data(game_list[i][4], ';')
+	        game_list[i] += (cat_list,) 
+	return render_template('dashboard.html', game_list = game_list, disp_list = disp_list, page = page, name=current_user.id)
 
 @app.route('/logout')
 @login_required

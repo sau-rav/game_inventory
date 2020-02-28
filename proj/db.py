@@ -2,7 +2,7 @@ import psycopg2
 
 def connectToDb():
 	try:
-		return psycopg2.connect("host=localhost dbname=dbms user=saurav password=saurav")
+		return psycopg2.connect("host=localhost dbname=steam_data user=postgres password=warrior")
 	except:
 		e = sys.exc_info()[0]
 		write_to_page("<p>Error: %s</p>")
@@ -91,3 +91,18 @@ def insert_into_users_db(username, password):
 	conn.commit()
 	cur.close()
 	conn.close()
+
+def user_owned_games(username):
+	conn = connectToDb()
+	cur = conn.cursor()
+	query ='''
+select * from home_page_data
+where steam_appid in (select gameid from users_games where username='{0}');
+	'''
+	cur.execute(query.format(username))
+
+	data = cur.fetchall()
+	print(data)
+	cur.close()
+	conn.close()
+	return data,len(data)
