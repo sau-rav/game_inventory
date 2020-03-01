@@ -11,7 +11,7 @@
 {% endblock bg %}
 {% block content %}
     <div class="container" style="background-color: rgb(240, 240, 240); border-radius: 2px;">
-        <h2 class="font-weight-normal">{{ game_data[1] }}</h2>
+        <h2 class="font-weight-normal" style="padding-top: 12px;">{{ game_data[1] }}</h2>
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -68,23 +68,32 @@
         <p>{{ game_data[30] }}</p>
         <hr>
         <h4 class="font-weight-normal">Platforms</h4>
-        <p>{{ game_data[6] }}</p>
+        {% for platform in game_data[33] %}
+            <span class="badge badge-light"><h6>{{ platform }}</h6></span>
+        {% endfor %}
         <hr>
         <h4 class="font-weight-normal">Misc. Data</h4>
-        <p><strong>Average Playtime : </strong> {{ game_data[14]/600 }} minutes</p>
-        <p><strong>Categories : </strong> {{ game_data[8] }}</p>
-        <p><strong>Tags : </strong>{{ game_data[10] }}</p>
-        <p><strong>Required Age : </strong>{{ game_data[7] }}</p>
-        <p><strong>Owners : </strong> {{ game_data[16] }}</p>
-        <p><strong>Price : </strong> {{ game_data[17] }}</p>
-        <hr>
+        <h6><strong>Average Playtime of Users : </strong> {{ game_data[14] }} minutes</h5>
+        <h6><strong>Categories : </strong> {{ game_data[8] }}</h5>
+        <h6><strong>Tags : </strong>{{ game_data[10] }}</h5>
+        <h6><strong>Required Age : </strong>{{ game_data[7] }}</h5>
+        <h6 style="padding-bottom: 12px;"><strong>Owners : </strong> {{ game_data[16] }}</h6>
+    </div>
+    <div class="container" style="background-color: darkgreen; border-radius: 2px;">
+        <p style="color: white; font-size: x-large; padding-top: 6px; padding-bottom: 6px; text-align: center;"><strong>Price : </strong> {{ game_data[17] }}$</p>
     </div>
     <!-- for ratings -->
     <div class="container" style="background-color: rgb(240, 240, 240); border-radius: 2px;">
         <h3 class="font-weight-normal">Ratings</h3>
+        {% if name %}
+            <span style="align-items: flex-start;">Positive Ratings : {{ game_data[7] }}</span>
+            <span style="align-items: flex-end;">Negative Ratings : {{ game_data[7] }}</span>
+        {% else %}
+
+        {% endif %}
     </div>
     <!-- for similar games -->
-    <div class="container" style="background-color: rgb(240, 240, 240); border-radius: 2px;">
+    <div class="container mt-2" style="background-color: rgb(240, 240, 240); border-radius: 2px;">
         <h3 class="font-weight-normal">Similar Games</h3>
     </div>
 {% endblock content %}
@@ -94,7 +103,7 @@
         <hr>
         <p>{{ game_data[21] }}</p>
         <hr>
-        <p><strong>Release Date : </strong> {{ game_data[2] }}</p>
+        <p><strong>Release Date : </strong> {{ game_data[32] }}</p>
         <p><strong>Publisher : </strong> {{ game_data[5] }}</p>
         <p><strong>Developer : </strong> {{ game_data[4] }}</p>
     </div>

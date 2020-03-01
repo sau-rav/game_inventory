@@ -2,7 +2,8 @@ import psycopg2
 
 def connectToDb():
 	try:
-		return psycopg2.connect("host=localhost dbname=steam_data user=postgres password=warrior")
+		return psycopg2.connect("host=localhost dbname=dbms user=saurav password=saurav")
+		#return psycopg2.connect("host=10.17.50.134 port=5432 dbname=group_22 user=group_22 password=732-722-568")
 	except:
 		e = sys.exc_info()[0]
 		write_to_page("<p>Error: %s</p>")
@@ -20,9 +21,9 @@ def get_game_data(filter, query_type):
 			cur.execute("select steam_appid, name, developer, genres, steamspy_tags, positive_ratings, negative_ratings, price, header_image from media_join_steam where string_to_array((%s), ';') <@ string_to_array(steamspy_tags, ';')", (filter,))
 			sample_data = cur.fetchall()
 			sample_data = [sample_data, len(sample_data)]
-		elif query_type == 2:	
+		elif query_type == 2:
 			# on basis of game name
-			cur.execute("select steam_appid, name, developer, genres, steamspy_tags, positive_ratings, negative_ratings, price, header_image from media_join_steam where name like '%(%s)%'", (filter,))
+			cur.execute("select steam_appid, name, developer, genres, steamspy_tags, positive_ratings, negative_ratings, price, header_image from media_join_steam where LOWER(name) like LOWER('%{}%')".format(filter))
 			sample_data = cur.fetchall()
 			sample_data = [sample_data, len(sample_data)]
 		elif query_type == 3:
@@ -96,8 +97,8 @@ def user_owned_games(username):
 	conn = connectToDb()
 	cur = conn.cursor()
 	query ='''
-select * from home_page_data
-where steam_appid in (select gameid from users_games where username='{0}');
+	select * from home_page_data
+	where steam_appid in (select gameid from users_games where username='{0}');
 	'''
 	cur.execute(query.format(username))
 

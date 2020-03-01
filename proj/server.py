@@ -1,4 +1,4 @@
-import os, math
+import os, math, time
 from flask import Flask, render_template, request, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
@@ -47,6 +47,8 @@ def index():
 		game_data = db.get_game_data(query, query_type)
 	game_list = game_data[0][10*(page-1):(10*(page-1)+per_page)]
 	list_size = math.ceil(game_data[1]/per_page)
+	if list_size == 0:
+		list_size = 1
 	disp_list = functions.disp_list_generator(page, list_size)
 	if page != list_size:
 		for i in range(per_page):
@@ -109,9 +111,10 @@ def dashboard():
 	per_page = 10
 	page = request.args.get('page', 1, type=int)
 	game_data = db.user_owned_games(current_user.id)
-	print(game_data)
 	game_list = game_data[0][10*(page-1):(10*(page-1)+per_page)]
 	list_size = math.ceil(game_data[1]/per_page)
+	if list_size == 0:
+		list_size = 1
 	disp_list = functions.disp_list_generator(page, list_size)
 	if page != list_size:
 	    for i in range(per_page):
@@ -132,6 +135,10 @@ def logout():
 @app.route('/<id>')
 def game_page(id):
 	data = db.get_full_data(id)
+	date_converted = data[2].strftime("%d-%b-%Y")
+	data += (date_converted,)
+	platform_converted = functions.extract_data(data[6], ';')
+	data += (platform_converted,)
 	if current_user.get_id() != None:
 		return render_template('game.html', game_data = data, name=current_user.id)
 	else:
@@ -146,3 +153,4 @@ def about():
 
 if __name__ == '__main__':
 	app.run(host = os.getenv('IP', 'localhost'), port = int(os.getenv('PORT', 8000)), debug = True)
+	#app.run(host= 'localhost', port=5432, debug=True)
