@@ -18,13 +18,22 @@
             <img src="{{ game[8] }}" class="media-object" style="width: 200px; height: 130px;">
           </div>
           <div class="media-body">
-            <a href="{{ url_for('game_page', id=game[0]) }}"><h2 class="font-weight-normal ml-3 ">{{ game[1] }}</h2></a>
+            <a href="{{ url_for('game_page', id=game[0]) }}" target="external"><h2 class="font-weight-normal ml-3 ">{{ game[1] }}</h2></a>
             <h6 class="font-weight-light ml-3">{{ game[2] }}</h6>
             <hr class="ml-3 mr-3">
             <div class="ml-3">
               {% for category in game[9] %}
                 <a class="btn btn-light btn-sm" href="{{ url_for('index', query=category, query_type=1) }}">{{ category }}</a>
               {% endfor %}
+              {% if name %}
+                <div class="float-right mr-3">
+                  {% if not game[10] %}
+                    <a class="btn btn-primary btn-sm" href="{{ url_for('index', page=page, own=game[0]) }}">Own This Game</a>
+                  {% else %}
+                    <a class="btn btn-success btn-sm" style="color: white;">Game Owned</a>
+                  {% endif %}
+                </div>
+              {% endif %}
             </div>
           </div>
       </article>

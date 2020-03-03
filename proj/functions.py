@@ -29,5 +29,4 @@ def extract_data(data, delimiter):
             element = ''
     if len(element) > 0:
         data_list.append(element)
-    print(data_list)
     return data_list

@@ -8,19 +8,19 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    
     {% if title %}
-        <title>Steam Stats - {{ title }}</title>
+        <title>Game Inventory - {{ title }}</title>
     {% else %}
-        <title>Steam Stats</title>
+        <title>Game Inventory</title>
     {% endif %}
 </head>
 <body {% block bg %} {% endblock %}>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="/">Steam Games</a>
+          <a class="navbar-brand mr-4" style="color: white;">Game Inventory</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>

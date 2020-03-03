@@ -11,6 +11,11 @@
 {% endblock %}
 
 {% block content %}
+  {% if register == 'success' %}
+    <div class="alert alert-dark" style="text-align: center;" role="alert">
+      Successfully Registered 
+    </div>
+  {% endif %}
   <div class="container">
     <form class="form-signin" method="POST" action="/login">
       <h2 class="form-signin-heading">Please sign in</h2>

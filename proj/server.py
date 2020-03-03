@@ -41,6 +41,10 @@ def index():
 	page = request.args.get('page', 1, type=int)
 	query = request.args.get('query', '', type=str)
 	query_type = request.args.get('query_type', 0, type=int)
+	own_id = request.args.get('own', -1, type=int)
+	if own_id > 0 and current_user.get_id() != None:
+		if db.inGamesAndNotOwned(current_user.id,own_id):
+			db.ownGame(current_user.id, own_id)
 	if query == '':
 		game_data = db.get_game_data('', 0)
 	else:
@@ -54,10 +58,22 @@ def index():
 		for i in range(per_page):
 			cat_list = functions.extract_data(game_list[i][4], ';')
 			game_list[i] += (cat_list,)
+			if current_user.get_id() != None:
+				flag = db.doesUserOwn(current_user.id, game_list[i][0])
+				if flag:
+					game_list[i] += (True,)
+				else:
+					game_list[i] += (False,)
 	else:
 		for i in range(game_data[1]%per_page):
 			cat_list = functions.extract_data(game_list[i][4], ';')
-			game_list[i] += (cat_list,)	
+			game_list[i] += (cat_list,)
+			if current_user.get_id() != None:
+				flag = db.doesUserOwn(current_user.id, game_list[i][0])
+				if flag:
+					game_list[i] += (True,)
+				else:
+					game_list[i] += (False,)
 	if query == '':
 		if current_user.get_id() != None:
 			return render_template('index.html', game_list = game_list, disp_list = disp_list, page = page, name=current_user.id)
@@ -111,11 +127,12 @@ def dashboard():
 	per_page = 10
 	page = request.args.get('page', 1, type=int)
 	game_data = db.user_owned_games(current_user.id)
-	game_list = game_data[0][10*(page-1):(10*(page-1)+per_page)]
+	game_list = game_data[0][10*(page-1):(10*(page-1)+per_page)] 
 	list_size = math.ceil(game_data[1]/per_page)
 	if list_size == 0:
 		list_size = 1
 	disp_list = functions.disp_list_generator(page, list_size)
+	recommended_games = db.recommendGames(current_user.id)
 	if page != list_size:
 	    for i in range(per_page):
 	        cat_list = functions.extract_data(game_list[i][4], ';')
@@ -124,7 +141,7 @@ def dashboard():
 	    for i in range(game_data[1]%per_page):
 	        cat_list = functions.extract_data(game_list[i][4], ';')
 	        game_list[i] += (cat_list,) 
-	return render_template('dashboard.html', game_list = game_list, disp_list = disp_list, page = page, name=current_user.id)
+	return render_template('dashboard.html', game_list = game_list, disp_list = disp_list, page = page, name=current_user.id, recommended_games = recommended_games)
 
 @app.route('/logout')
 @login_required
@@ -134,15 +151,36 @@ def logout():
 
 @app.route('/<id>')
 def game_page(id):
+	own_id = request.args.get('own', -1, type=int)
+	vote = request.args.get('vote', -1, type=int)
+	if vote != -1 and current_user.get_id() != None:
+		db.changeVote(current_user.id, id, vote)
+	if own_id > 0 and current_user.get_id() != None:
+		if db.inGamesAndNotOwned(current_user.id,own_id):
+			db.ownGame(current_user.id, own_id)
 	data = db.get_full_data(id)
 	date_converted = data[2].strftime("%d-%b-%Y")
 	data += (date_converted,)
 	platform_converted = functions.extract_data(data[6], ';')
 	data += (platform_converted,)
 	if current_user.get_id() != None:
-		return render_template('game.html', game_data = data, name=current_user.id)
+		flag = db.doesUserOwn(current_user.id, data[0])
+		if flag:
+			data += (True,)
+			vote_status = db.getVote(current_user.id, data[0])
+			if vote_status == 0:
+				data += (0,)
+			elif vote_status == 1:
+				data += (1,)
+			else:
+				data += (2,)
+		else:
+			data += (False,)
+	similar_games_data = db.getSimilarGames(data[10], data[0])
+	if current_user.get_id() != None:
+		return render_template('game.html', game_data = data, name=current_user.id, similar_games_data = similar_games_data)
 	else:
-		return render_template('game.html', game_data = data)
+		return render_template('game.html', game_data = data, similar_games_data = similar_games_data)
 
 @app.route('/about')
 def about():
