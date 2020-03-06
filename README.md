@@ -2,7 +2,6 @@
 DBMS project<br>
 
 Requirements:<br>
-
 Flask, psycopg2, flask_bootstrap, flask_wtf, wtforms, flask_login<br>
 
 Database dump can be found at:<br>
