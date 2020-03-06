@@ -2,8 +2,7 @@ import psycopg2
 
 def connectToDb():
 	try:
-		return psycopg2.connect("host=localhost dbname=dbms user=saurav password=saurav")
-		#return psycopg2.connect("host=10.17.50.134 port=5432 dbname=group_22 user=group_22 password=732-722-568")
+		return psycopg2.connect("host=localhost dbname=<dbname> user=<username> password=<password>")
 	except:
 		e = sys.exc_info()[0]
 		write_to_page("<p>Error: %s</p>")
