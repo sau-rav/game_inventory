@@ -1,4 +1,4 @@
-# project_repo
+# game_inventory
 DBMS project<br>
 
 Requirements:<br>
