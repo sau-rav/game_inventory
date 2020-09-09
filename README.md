@@ -24,11 +24,11 @@ python server.py <br>
   <h4>Dashboard</h4>
   <p>This page consists of the list of games which a user already owns.  The layout is similar to that of the homepage.</p>
 <hr>
-!(https://raw.githubusercontent.com/sau-rav/game_inventory/master/proj/static/index.png)
-
-!(https://raw.githubusercontent.com/sau-rav/game_inventory/master/proj/static/game.png)
-
-!(https://raw.githubusercontent.com/sau-rav/game_inventory/master/proj/static/rate.png)
-
-!(https://raw.githubusercontent.com/sau-rav/game_inventory/master/proj/static/dashboard.png)
+![](proj/static/index.png)
+<hr>
+![](proj/static/game.png)
+<hr>
+![](proj/static/rate.png)
+<hr>
+![](proj/static/dashboard.png)
 
