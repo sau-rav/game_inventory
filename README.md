@@ -24,6 +24,7 @@ python server.py <br>
   <h4>Dashboard</h4>
   <p>This page consists of the list of games which a user already owns.  The layout is similar to that of the homepage.</p>
 <br>
+![alt text](https://www.wallpaperflare.com/vector-forest-sunset-forest-nature-sky-atmosphere-darkness-wallpaper-cvfha)
 ![alt text](https://github.com/sau-rav/game_inventory/blob/master/proj/static/index.png)
 <hr>
 ![alt text](https://github.com/sau-rav/game_inventory/blob/master/proj/static/game.png)
