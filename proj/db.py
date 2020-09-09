@@ -1,4 +1,5 @@
 import psycopg2
+import sys
 
 def connectToDb():
 	try:
