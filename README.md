@@ -23,6 +23,8 @@ python server.py <br>
   <p>The Register page asks the user to enter a name and a password using which he/she will make an account.Since the name is our primary key and should be unique, an error will be thrown and user will be notified to enter another value. The login page asks user to enter valid name and password, which are then verified using our database. After login, the user is redirected to the dashboard page which consists of the games a user already owns.</p>
   <h4>Dashboard</h4>
   <p>This page consists of the list of games which a user already owns.  The layout is similar to that of the homepage.</p>
+ 
+ <h4> Screenshots </h4>
 
 ![](proj/static/index.png)
 ![](proj/static/game.png)
