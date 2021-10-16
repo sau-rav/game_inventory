@@ -5,7 +5,7 @@ Requirements:<br>
 Flask, psycopg2, flask_bootstrap, flask_wtf, wtforms, flask_login<br>
 
 Database dump can be found at:<br>
-https://drive.google.com/open?id=1Et2ALDtEZ_zYyWYyRKa8or2OgEvP3ejb <br>
+https://drive.google.com/file/d/1xabPFbvs6yjwgmKOE5dXN6DU-QbdvsEa/view?usp=sharing <br>
 
 For loading the database in psql: <br>
 psql <db_name> < <dump.sql>
